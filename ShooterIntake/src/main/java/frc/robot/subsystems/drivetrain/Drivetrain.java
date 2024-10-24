@@ -7,6 +7,8 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+
+import dev.doglog.DogLog;
 import drivers.PhoenixSwerveHelper;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -53,8 +55,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   }
 
   public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
-    return run(() -> this.setControl(requestSupplier.get()))
-        .withName("Drivetrain: applyRequest(" + requestSupplier.get().toString() + ")");
+    return run(() -> this.setControl(requestSupplier.get()));
   }
 
   public void updateSimState() {
@@ -126,6 +127,12 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   @Override
   public void periodic() {
     attemptToSetPerspective();
+    if(getCurrentCommand() != null){
+      DogLog.log("RobotState/Subsystems/Drivetrain/ActiveCommand", getCurrentCommand().toString());
+    }
+    DogLog.log("RobotState/Pose", getPose());
+    DogLog.log("RobotState/Subsystems/Drivetrain/MeasuredStates", getState().ModuleStates);
+    DogLog.log("RobotState/Subsystems/Drivetrain/SetpointStates", getState().ModuleTargets);
   }
 
   public void attemptToSetPerspective() {

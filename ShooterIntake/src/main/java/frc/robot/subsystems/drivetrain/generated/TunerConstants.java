@@ -25,19 +25,19 @@ public class TunerConstants {
   // output type specified by SwerveModuleConstants.SteerMotorClosedLoopOutput
   private static final Slot0Configs STEER_GAINS =
       new Slot0Configs()
-          .withKP(75) // 100
+          .withKP(100)
           .withKI(0)
-          .withKD(0) // 0.2
+          .withKD(0)
           .withKS(0)
-          .withKV(0) // 1.5
+          .withKV(0)
           .withKA(0);
   // When using closed-loop control, the drive motor uses the control
   // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
   private static final Slot0Configs DRIVE_GAINS =
       new Slot0Configs()
-          .withKP(3.8) // 0.12
+          .withKP(3.8)
           .withKI(0)
-          .withKD(0) // 3
+          .withKD(0)
           .withKS(0.12)
           .withKV(0)
           .withKA(0);
@@ -63,7 +63,7 @@ public class TunerConstants {
 
   private static final double DRIVE_GEAR_RATIO = 5.357142857142857;
   private static final double STEER_GEAR_RATIO = 21.428571428571427;
-  private static final Distance WHEEL_RADIUS = Units.Inches.of(1.97); // inches
+  private static final Distance WHEEL_RADIUS = Units.Inches.of(2); // inches
 
   private static final boolean STEER_INVERTED = true;
 
@@ -71,8 +71,8 @@ public class TunerConstants {
   private static final int PIGEON_ID = 0;
 
   // These are only used for simulation
-  private static final double STEER_INERTIA = 0.001;
-  private static final double DRIVE_INERTIA = 0.05;
+  private static final double STEER_INERTIA = 0.0001;
+  private static final double DRIVE_INERTIA = 0.001;
   // Simulated voltage necessary to overcome friction
   private static final Voltage STEER_KS = Units.Volts.of(0.25);
   private static final Voltage DRIVE_KS = Units.Volts.of(0.25);
@@ -134,6 +134,7 @@ public class TunerConstants {
 
   public static final double DRIVE_BASE_RADIUS = FRONT_LEFT_POSITION.getNorm();
 
+  // We separate between module and position, so modules can be hotswapped.
   private static final SwerveModuleConstants MODULE_0 =
       CONSTANT_FACTORY.createModuleConstants(0, 1, 0, 0.0, 0, 0, false, STEER_INVERTED);
 

@@ -6,7 +6,7 @@ import java.util.function.DoubleSupplier;
 public class Shooter extends TalonFXSubsystem {
 
   public Shooter(TalonFXSubsystemConfiguration config) {
-    super(config, TalonFXSubsystem.defaultGoal);
+    super(config, ShooterGoal.IDLE);
   }
 
   public enum ShooterGoal implements TalonFXSubsystemGoal {

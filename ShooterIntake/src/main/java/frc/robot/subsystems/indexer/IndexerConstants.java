@@ -10,6 +10,9 @@ import java.util.function.DoubleSupplier;
 
 public class IndexerConstants {
 
+  public static final double STAGE1_REDUCTION = 3.0;
+  public static final double STAGE2_REDUCTION = 3.0;
+
   public static final TalonFXSubsystemConfiguration STAGE1_CONFIG =
       new TalonFXSubsystemConfiguration();
 
@@ -24,27 +27,32 @@ public class IndexerConstants {
 
     STAGE1_CONFIG.enableSupplyCurrentLimit = true;
     STAGE1_CONFIG.supplyCurrentLimit = 20;
+
+    STAGE1_CONFIG.sensorToMechRatio = STAGE1_REDUCTION;
   }
 
-  public static final TalonFXSubsystemConfiguration STAGE2_CONFIG = STAGE1_CONFIG;
+  public static final TalonFXSubsystemConfiguration STAGE2_CONFIG =
+      new TalonFXSubsystemConfiguration();
 
   static {
     STAGE2_CONFIG.name = "IndexerStage2";
 
-    STAGE1_CONFIG.codeEnabled = true;
-    STAGE1_CONFIG.logTelemetry = false;
+    STAGE2_CONFIG.codeEnabled = true;
+    STAGE2_CONFIG.logTelemetry = false;
 
     STAGE2_CONFIG.masterConstants =
         new TalonFXConstants(new CANDevice(11), InvertedValue.Clockwise_Positive);
 
     STAGE2_CONFIG.enableSupplyCurrentLimit = true;
     STAGE2_CONFIG.supplyCurrentLimit = 20;
+
+    STAGE2_CONFIG.sensorToMechRatio = STAGE2_REDUCTION;
   }
 
   public enum IndexerGoal implements TalonFXSubsystemGoal {
     IDLE(0.0, ControlType.VOLTAGE),
     INTAKE(7.5, ControlType.VOLTAGE),
-    SHOOT(9.0, ControlType.VOLTAGE),
+    FEED(9.0, ControlType.VOLTAGE),
     EJECT(-10.0, ControlType.VOLTAGE);
 
     public final double voltage;

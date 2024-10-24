@@ -33,6 +33,6 @@ public class ShooterConstants {
     CONFIGURATION.enableSupplyCurrentLimit = true;
     CONFIGURATION.supplyCurrentLimit = 20;
 
-    CONFIGURATION.velocityThreshold = 1.5; // 1.5 rps == 90 rpm
+    CONFIGURATION.velocityThreshold = 100.0 / 60.0; // 100.0 rpm = 1.67 rps
   }
 }

@@ -6,7 +6,7 @@ import frc.robot.subsystems.indexer.IndexerConstants.IndexerGoal;
 
 public class IndexerStageTwo extends TalonFXSubsystem {
 
-  private static final DigitalInput beam = new DigitalInput(0);
+  private static final DigitalInput beam = new DigitalInput(1);
 
   public IndexerStageTwo(TalonFXSubsystemConfiguration config) {
     super(config, IndexerGoal.IDLE);

@@ -4,24 +4,13 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import drivers.TalonFXSubsystem.CANDevice;
 import drivers.TalonFXSubsystem.TalonFXConstants;
 import drivers.TalonFXSubsystem.TalonFXSubsystemConfiguration;
-import drivers.TalonFXSubsystem.TalonFXSubsystemSimConstants;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.robot.subsystems.intake.IntakeDeploy.DeployGoal;
 import frc.robot.subsystems.intake.IntakeRollers.RollersGoal;
-import pid.ScreamPIDConstants;
-import sim.SimWrapper;
-import util.SimUtil;
 
 public class IntakeConstants {
 
   public static final double DEPLOY_REDUCTION = 16.0;
   public static final double ROLLERS_REDUCTION = 3.0;
-
-  public static final DCMotorSim DEPLOY_SIM = SimUtil.createDCMotorSim(DCMotor.getKrakenX60(1), DEPLOY_REDUCTION, 0.067);
-  public static final DCMotorSim ROLLERS_SIM = SimUtil.createDCMotorSim(DCMotor.getKrakenX60(1), ROLLERS_REDUCTION, 0.001);
-
-  public static final ScreamPIDConstants DEPLOY_SIM_GAINS = new ScreamPIDConstants(75.0, 0.0, 0.0);
 
   public static final TalonFXSubsystemConfiguration DEPLOY_CONFIG =
       new TalonFXSubsystemConfiguration();
@@ -31,8 +20,6 @@ public class IntakeConstants {
 
     DEPLOY_CONFIG.codeEnabled = true;
     DEPLOY_CONFIG.logTelemetry = false;
-
-    DEPLOY_CONFIG.simConstants = new TalonFXSubsystemSimConstants(new SimWrapper(DEPLOY_SIM), DEPLOY_SIM_GAINS.getPIDController(), false, false, false);
 
     DEPLOY_CONFIG.masterConstants =
         new TalonFXConstants(new CANDevice(8), InvertedValue.Clockwise_Positive);
@@ -51,8 +38,6 @@ public class IntakeConstants {
     ROLLERS_CONFIG.codeEnabled = true;
     ROLLERS_CONFIG.logTelemetry = false;
 
-    ROLLERS_CONFIG.simConstants = new TalonFXSubsystemSimConstants(new SimWrapper(ROLLERS_SIM), new ScreamPIDConstants().getPIDController());
-
     ROLLERS_CONFIG.masterConstants =
         new TalonFXConstants(new CANDevice(9), InvertedValue.Clockwise_Positive);
 
@@ -61,7 +46,8 @@ public class IntakeConstants {
     ROLLERS_CONFIG.sensorToMechRatio = ROLLERS_REDUCTION;
   }
 
-  public enum IntakeGoal{
+  
+  public enum IntakeGoal {
     IDLE(DeployGoal.IDLE, RollersGoal.IDLE),
     INTAKE(DeployGoal.DEPLOY, RollersGoal.INTAKE),
     EJECT(DeployGoal.IDLE, RollersGoal.EJECT);
@@ -69,7 +55,7 @@ public class IntakeConstants {
     public final DeployGoal deployGoal;
     public final RollersGoal rollersGoal;
 
-    private IntakeGoal(DeployGoal deployGoal, RollersGoal rollersGoal){
+    private IntakeGoal(DeployGoal deployGoal, RollersGoal rollersGoal) {
       this.deployGoal = deployGoal;
       this.rollersGoal = rollersGoal;
     }
