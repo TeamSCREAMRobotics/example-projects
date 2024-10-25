@@ -46,7 +46,6 @@ public class IntakeConstants {
     ROLLERS_CONFIG.sensorToMechRatio = ROLLERS_REDUCTION;
   }
 
-  
   public enum IntakeGoal {
     IDLE(DeployGoal.IDLE, RollersGoal.IDLE),
     INTAKE(DeployGoal.DEPLOY, RollersGoal.INTAKE),

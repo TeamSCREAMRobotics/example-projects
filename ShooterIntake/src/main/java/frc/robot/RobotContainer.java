@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.generated.TunerConstants;
 import frc.robot.subsystems.indexer.IndexerConstants;
@@ -25,6 +24,7 @@ import frc.robot.subsystems.shooter.ShooterConstants;
 
 public class RobotContainer {
 
+  // Initialize subsystems
   private static final Drivetrain drivetrain = TunerConstants.DriveTrain;
   private static final IntakeDeploy intakeDeploy = new IntakeDeploy(IntakeConstants.DEPLOY_CONFIG);
   private static final IntakeRollers intakeRollers =
@@ -35,38 +35,42 @@ public class RobotContainer {
       new IndexerStageTwo(IndexerConstants.STAGE2_CONFIG);
   private static final Shooter shooter = new Shooter(ShooterConstants.CONFIGURATION);
 
-  private static final CommandXboxController controller = new CommandXboxController(0);
-
   public RobotContainer() {
     configureBindings();
     configureDefaultCommands();
   }
 
   private void configureBindings() {
-    controller
-        .rightTrigger()
-        .and(controller.rightBumper().negate()) // While the right trigger is pressed and the right bumper is not pressed, execute whileTrue.
-        .whileTrue(
+    Controlboard.resetHeading().onTrue(Commands.runOnce(() -> drivetrain.resetHeading()));
+
+    Controlboard.intake()
+        .whileTrue( // While the right trigger is pressed and the right bumper is not pressed.
             Commands.parallel(
                 applyIntakeGoal(IntakeGoal.INTAKE), // Apply intake goal
                 indexerStageOne
                     .applyGoal(IndexerGoal.INTAKE)
                     .until(
-                        () -> indexerStageOne.beamTriggered() && indexerStageTwo.beamTriggered()), // Apply intake goal to stage one until both beams are triggered.
+                        () -> indexerStageOne.beamTriggered() && indexerStageTwo.beamTriggered()),
+                // Apply intake goal to stage one until both beams are triggered.
                 indexerStageTwo
                     .applyGoal(IndexerGoal.INTAKE)
-                    .until(() -> indexerStageTwo.beamTriggered()))); // Apply intake goal to stage two until second beam is triggered.
+                    .until(() -> indexerStageTwo.beamTriggered())));
+    // Apply intake goal to stage two until second beam is triggered.
 
-    controller
-        .rightBumper()
-        .whileTrue(shooter.applyGoal(ShooterGoal.SHOOT)) // While right bumper is pressed, apply shoot goal to shooter.
+    Controlboard.shoot()
+        .whileTrue(
+            shooter.applyGoal(
+                ShooterGoal.SHOOT)) // While right bumper is pressed, apply shoot goal to shooter.
         .and(() -> shooter.atGoal())
-        .whileTrue(applyIndexerGoalBoth(IndexerGoal.FEED)) // If the shooter is at the goal and right bumper is still pressed, apply feed goal to indexer.
-        .and(controller.rightTrigger())
-        .whileTrue(applyIntakeGoal(IntakeGoal.INTAKE)); // If the right trigger is pressed as well, apply intake goal.
+        .whileTrue(applyIndexerGoalBoth(IndexerGoal.FEED))
+        // If the shooter is at the goal and right bumper is still pressed, apply feed goal to
+        // indexer.
+        .and(Controlboard.controller.rightTrigger())
+        .whileTrue(
+            applyIntakeGoal(
+                IntakeGoal.INTAKE)); // If the right trigger is pressed as well, apply intake goal.
 
-    controller
-        .leftBumper()
+    Controlboard.eject()
         .whileTrue( // While left bumper is pressed, apply eject goal to all.
             Commands.parallel(
                 shooter.applyGoal(ShooterGoal.EJECT),

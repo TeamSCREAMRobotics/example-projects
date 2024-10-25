@@ -1,13 +1,9 @@
 package frc.robot.subsystems.intake;
 
+import dev.doglog.DogLog;
 import drivers.TalonFXSubsystem;
 import edu.wpi.first.math.geometry.Rotation2d;
 import java.util.function.DoubleSupplier;
-
-import com.ctre.phoenix6.controls.ControlRequest;
-import com.ctre.phoenix6.signals.ControlModeValue;
-
-import dev.doglog.DogLog;
 
 public class IntakeDeploy extends TalonFXSubsystem {
 
@@ -40,7 +36,7 @@ public class IntakeDeploy extends TalonFXSubsystem {
 
   @Override
   public void periodic() {
-      super.periodic();
-      DogLog.log(logPrefix + "Angle", getAngle());
+    super.periodic();
+    DogLog.log(logPrefix + "Angle", getAngle());
   }
 }

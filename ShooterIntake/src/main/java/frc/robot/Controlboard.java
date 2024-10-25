@@ -4,6 +4,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.drivetrain.DrivetrainConstants;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -44,5 +45,21 @@ public class Controlboard {
 
   public static BooleanSupplier getFieldCentric() {
     return () -> fieldCentric;
+  }
+
+  public static Trigger intake() {
+    return controller.rightTrigger().and(controller.rightBumper().negate());
+  }
+
+  public static Trigger shoot() {
+    return controller.rightBumper();
+  }
+
+  public static Trigger eject() {
+    return controller.leftBumper();
+  }
+
+  public static Trigger resetHeading() {
+    return controller.back();
   }
 }
