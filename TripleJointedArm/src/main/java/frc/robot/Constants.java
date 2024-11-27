@@ -1,15 +1,13 @@
 package frc.robot;
 
-import com.ctre.phoenix6.mechanisms.MechanismState;
-
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 
-public class Constants{
+public class Constants {
 
-    public static final double MECH_WIDTH = Units.inchesToMeters(25);
-    public static final double MECH_LENGTH = MECH_WIDTH;
-    
-    public static final Mechanism2d MEASURED_MECHANISM = new Mechanism2d(MECH_WIDTH, MECH_LENGTH);
-    public static final Mechanism2d SETPOINT_MECHANISM = new Mechanism2d(MECH_WIDTH, MECH_LENGTH);
+  public static final double MECH_WIDTH = Units.inchesToMeters(25);
+  public static final double MECH_LENGTH = MECH_WIDTH;
+
+  public static final Mechanism2d MEASURED_MECHANISM = new Mechanism2d(MECH_WIDTH, MECH_LENGTH);
+  public static final Mechanism2d SETPOINT_MECHANISM = new Mechanism2d(MECH_WIDTH, MECH_LENGTH);
 }

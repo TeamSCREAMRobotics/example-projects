@@ -7,9 +7,10 @@ import drivers.TalonFXSubsystem.TalonFXConstants;
 import drivers.TalonFXSubsystem.TalonFXSubsystemConfiguration;
 import drivers.TalonFXSubsystem.TalonFXSubsystemSimConstants;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import pid.ScreamPIDConstants;
 import sim.SimWrapper;
+import util.SimUtil;
 
 public class ElbowConstants {
 
@@ -17,18 +18,10 @@ public class ElbowConstants {
 
   public static final Length LENGTH = Length.fromInches(36);
 
-  public static final SingleJointedArmSim SIM =
-      new SingleJointedArmSim(
-          DCMotor.getKrakenX60(1),
-          REDUCTION,
-          0.01,
-          LENGTH.getMeters(),
-          -Math.toRadians(180),
-          Math.toRadians(180),
-          false,
-          -Math.toRadians(90));
+  public static final DCMotorSim SIM =
+      SimUtil.createDCMotorSim(DCMotor.getKrakenX60(2), REDUCTION, 0.01);
 
-  public static final ScreamPIDConstants SIM_GAINS = new ScreamPIDConstants(10.0, 0, 0);
+  public static final ScreamPIDConstants SIM_GAINS = new ScreamPIDConstants(300.0, 0, 0);
 
   public static final TalonFXSubsystemConfiguration CONFIGURATION =
       new TalonFXSubsystemConfiguration();
@@ -39,10 +32,11 @@ public class ElbowConstants {
     CONFIGURATION.logTelemetry = false;
 
     CONFIGURATION.simConstants =
-        new TalonFXSubsystemSimConstants(new SimWrapper(SIM), SIM_GAINS.getPIDController());
+        new TalonFXSubsystemSimConstants(
+            new SimWrapper(SIM), SIM_GAINS.getPIDController(), false, false, false);
 
     CONFIGURATION.masterConstants =
-        new TalonFXConstants(new CANDevice(1), InvertedValue.Clockwise_Positive);
+        new TalonFXConstants(new CANDevice(9), InvertedValue.Clockwise_Positive);
 
     CONFIGURATION.sensorToMechRatio = REDUCTION;
   }

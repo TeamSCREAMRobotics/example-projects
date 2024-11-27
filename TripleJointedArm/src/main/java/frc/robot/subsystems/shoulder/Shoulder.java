@@ -14,7 +14,7 @@ public class Shoulder extends TalonFXSubsystem {
   }
 
   public enum ShoulderGoal implements TalonFXSubsystemGoal {
-    HOME(Rotation2d.fromDegrees(90), ControlType.MOTION_MAGIC_POSITION);
+    HOME(Rotation2d.fromDegrees(110.304), ControlType.MOTION_MAGIC_POSITION);
 
     public final Rotation2d angle;
     public final ControlType controlType;

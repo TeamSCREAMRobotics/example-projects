@@ -14,7 +14,7 @@ public class Wrist extends TalonFXSubsystem {
   }
 
   public enum WristGoal implements TalonFXSubsystemGoal {
-    HOME(Rotation2d.fromDegrees(90), ControlType.MOTION_MAGIC_POSITION);
+    HOME(Rotation2d.fromDegrees(144.142), ControlType.MOTION_MAGIC_POSITION);
 
     public final Rotation2d angle;
     public final ControlType controlType;

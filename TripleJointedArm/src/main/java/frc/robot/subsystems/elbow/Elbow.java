@@ -11,7 +11,7 @@ public class Elbow extends TalonFXSubsystem {
   }
 
   public enum ElbowGoal implements TalonFXSubsystemGoal {
-    HOME(Rotation2d.fromDegrees(-90), ControlType.MOTION_MAGIC_POSITION);
+    HOME(Rotation2d.fromDegrees(-159.203), ControlType.MOTION_MAGIC_POSITION);
 
     public final Rotation2d angle;
     public final ControlType controlType;
